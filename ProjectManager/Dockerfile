@@ -1,14 +1,25 @@
-# Use Java 17
-FROM eclipse-temurin:17-jdk
-
-# Set working directory
+# ---------- Build stage ----------
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy jar from target folder
-COPY target/*.jar app.jar
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Expose port (Render will override using PORT)
+# Copy source code
+COPY src ./src
+
+# Build jar
+RUN mvn clean package -DskipTests
+
+
+# ---------- Run stage ----------
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+
+# Copy jar from build stage
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-# Run the application
 CMD ["java", "-jar", "app.jar"]
