@@ -1,9 +1,9 @@
 import { useState } from "react";
-import AdminSidebar from "../components/AdminSidebar";
-import ProjectManager from "../components/ProjectManager";
-import ClientManager from "../components/ClientManager";
-import ContactTable from "../components/ContactTable";
-import SubscriberTable from "../components/SubscriberTable";
+import AdminSidebar from "../Components/AdminSidebar";
+import ProjectManager from "../Components/ProjectManager";
+import ClientManager from "../Components/ClientManager";
+import ContactTable from "../Components/ContactTable";
+import SubscriberTable from "../Components/SubscriberTable";
 
 const Admin = () => {
   const [active, setActive] = useState("projects");
